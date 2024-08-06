@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>new</title>
+</head>
+<body>
+    <section>
+        <p id="MyName">&#174; Mostafa EARL Drsh &#169;</p>
+        <div class="layout-bg d-none">
+        
+        </div>
+        
+        <div class="container main-box bg-secondary mt-3 pt-5 d-none">
+            <div class="mb-3  row d-flex ">
+                <div class="form-floating  col-5">
+                    <input type="text" class="form-control form-floating " id="title">
+                    <label for="productName" >Title</label>
+                    
+                </div>
+                <div class="form-floating offset-2 col-5">
+                    <input type="date" class="form-control " id="date">
+                    <label for="productName">Date</label>
+                </div>
+            </div>
+            <div class="form-floating col-12 mb-3">
+                <input type="notes" class="form-control " id="notes" >
+                <label for="productName">Notes</label>
+            </div>
+                
+            <div class="input-buttons d-flex justify-content-center">
+                <button id="cancel">Cancel</button>
+                <button id="add">Add</button>
+            </div>
+    </section>
+    
+    <div class="container my-5 py-2 ">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex ">
+                    <div class="mb-4"><button  id="new">New <i class="fa-solid fa-plus"></i></button><spam class=" d-flex" id="counter">0</spam></div>
+                    <div><button id="Reset" onclick="reset()">Reset</button></div>
+                </div>
+                
+                <table class="text-start">
+                    <thead class="">
+                        <tr>
+                            <th id="sequence">#No</th>
+                            <th class="title col-2 ">Title</th>
+                                <th class="notes col-8">Notes</th>
+                                <th class="date col-2">Date</th>
+                            <th class="icons" id="edit">Edit</th>
+                            <th class="icons">Delete</th>
+                            <th class="icons"><div id="done-word" title='0'>Done</div></th>
+                        </tr>
+                    </thead> 
+                    <tbody id="rowData">
+                    </tbody> 
+                </table>
+            </div>
+
+
+            <div id="wlecome">
+                <h2 id="welcome-message">"Welcome  to ''EARL Drsh'' [ToDo List App] "</h2>
+                <div class="usage-app">
+                    <button>How to use app <i class="fa-solid fa-angle-down fa-beat"></i></button>
+                </div>
+                <div class="app-brife">
+                    <table>
+                        <tr>
+                            <td><span>press New : </span></td>
+                            <td>to creat new List</td>
+                        </tr>
+                        <tr>
+                            <td><span>press Add or Enter : </span></td>
+                            <td>to add new List</td>
+                        </tr>
+                        <tr>
+                            <td><span>press Cancel or ESC :</span></td>
+                            <td>to decline</td>
+                        </tr>
+                        <tr>
+                            <td><span>press Edit one click :</span></td>
+                            <td>to make edit</td>
+                        </tr>
+                        <tr>
+                            <td><span>press Save dauble click :</span></td>
+                            <td>to save  your edit</td>
+                        </tr>
+                        <tr>
+                            <td><span>press Reser :</span></td>
+                            <td>to clear your App</td>
+                        </tr>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div> 
+</section> 
+
+
+
+    <script src="js/all.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

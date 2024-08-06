@@ -1,0 +1,286 @@
+var title = document.getElementById("title")
+var notes = document.getElementById("notes")
+var date = document.getElementById("date")
+var checkedCouner 
+
+var ok =[]  // arr to store done index
+var allList =[]  // arr to store all lists
+
+if(localStorage.getItem("allList") == null)
+{
+    allList =[]
+}
+else{
+    allList =JSON.parse(localStorage.getItem("allList"))
+    console.log(allList + "  allList");
+    displayList()
+}
+
+/* -------------------------------------------------------------------------- */
+
+if(localStorage.getItem("myDone") == null)
+{
+     checkedCouner =0 /* //////////////////////////////////////////////// */
+}
+else{
+    checkedCouner = JSON.parse(localStorage.getItem("myDone"))
+    document.getElementById("done-word").title = `+${checkedCouner}`; 
+    // displayList()
+}
+
+var oklistarr =0
+/* -------------------------------------------------------------------------- */
+
+if(localStorage.getItem("oklist") == null)
+{
+    console.log(oklistarr + "-----------------");
+    
+}else{
+    
+     oklistarr = JSON.parse(localStorage.getItem("oklist"))
+    console.log(oklistarr + "===============");
+    for (let index = 0; index < oklistarr.length; index++) {
+        x12= document.querySelectorAll(".input-title")[index].classList.remove("add-list-done"); 
+        // console.log(x12);
+        document.querySelectorAll(".input-notes")[index].classList.remove("add-list-done"); 
+        document.querySelectorAll(".input-date")[index].classList.remove("add-list-done"); 
+        
+    }
+}
+
+
+
+let newBtn = document.getElementById("new"); //--------------------------------------------------- new BTn
+newBtn.addEventListener("click" , ()=>{
+
+document.getElementById("title").value = " "
+document.getElementById("notes").value= " "
+document.getElementById("date").value= ""
+
+document.getElementById("title").focus()
+
+document.querySelector(".layout-bg").classList.replace("d-none" ,"d-block");
+document.querySelector(".main-box").classList.replace("d-none" ,"d-block");
+})
+//--------------------------------------------------------------------------------------- add BTn and Enter key
+function addBtnFunc(){
+
+    document.querySelector(".layout-bg").classList.replace("d-block" ,"d-none");
+    document.querySelector(".main-box").classList.replace("d-block" ,"d-none");
+
+    var title = document.getElementById("title").value
+    var notes = document.getElementById("notes").value
+    var date = document.getElementById("date").value
+    addList();
+}
+
+let addBtn = document.getElementById("add")
+addBtn.addEventListener("click", ()=>{
+    addBtnFunc()
+})
+
+document.addEventListener("keyup",(e)=>{
+    if(e.key == "Enter")
+        addBtnFunc()
+})
+
+let cancelBtn = document.getElementById("cancel");//-------------------------------------- cancel BTn and ESC Key
+cancelBtn.addEventListener("click" , ()=>{
+document.querySelector(".layout-bg").classList.replace("d-block" ,"d-none");
+document.querySelector(".main-box").classList.replace("d-block" ,"d-none");
+})
+
+document.addEventListener("keyup",(e)=>{
+    if(e.key == "Escape")
+    {
+        document.querySelector(".layout-bg").classList.replace("d-block" ,"d-none");
+        document.querySelector(".main-box").classList.replace("d-block" ,"d-none");
+        console.log("ESC");
+    }
+})
+
+
+/* -------------------------------------------------------------------------- */
+/*                                  functions                                  */
+/* -------------------------------------------------------------------------- */
+
+var list
+/* --------------------------------- addList -------------------------------- */
+function addList() {
+
+var list ={
+    listTitle :title.value ,
+    listNotes :notes.value ,
+    listDate :date.value ,
+}
+allList.push(list)
+
+console.log(list.listTitle);
+console.log(allList);
+console.log(allList.length);
+
+localStorage.setItem("allList" , JSON.stringify(allList))
+displayList()
+}
+/* ------------------------------ displayList() ----------------------------- */
+function displayList() {
+var cartona = ""
+console.log(allList.length);
+for (let i = 0; i < allList.length ; i++) {
+    console.log("allList.length " + allList.length);
+    cartona += `
+    <tr>
+    <td><input type="text" class="spcial-form-control  "   disabled readonly value="${i}"></td>
+    <td><input type="text" class="form-control list-box input-title"   disabled readonly value="${allList[i].listTitle}"></td>
+    <td><input type="text" class="form-control list-box input-notes"  disabled readonly value="${allList[i].listNotes}"></td>
+    <td><input type="text" class="form-control list-box input-date"  disabled readonly value="${allList[i].listDate}"></td>
+
+    <td>
+    <button class="btn0 editBtn" onclick="editList(${i})" ondblclick="saveList(${i})">
+    <i id="edit-1" class="fa-solid fa-pen icons edit form-control"></i>
+    </button>
+    </td>
+
+    <td>
+    <button class="btn0" onclick="deleteList(${i})">
+    <i class="fa-solid fa-trash-can icons delete form-control"></i>
+    </button>
+    </td>
+
+    <td>
+    <input type="checkbox" name="" id="myCheck" class="icons done chk" onclick="handleCheck(${i})">
+    </button>
+    </td>
+    
+    </tr>
+    `
+    // handleCheck()
+}
+document.getElementById("counter").innerHTML = allList.length
+document.querySelector("#rowData").innerHTML = cartona
+}
+/* ------------------------------- editList() ------------------------------- */
+function editList(index)
+{
+document.getElementById("edit").innerHTML = "Save"
+document.querySelectorAll(".edit")[index].classList.replace("fa-pen" ,"fa-floppy-disk")
+
+document.querySelectorAll(".input-title")[index].classList.add("editing-list-box"); 
+document.querySelectorAll(".input-notes")[index].classList.add("editing-list-box"); 
+document.querySelectorAll(".input-date")[index].classList.add("editing-list-box"); 
+
+document.querySelectorAll(".input-title")[index].removeAttribute("readonly")
+document.querySelectorAll(".input-title")[index].removeAttribute("disabled")
+
+document.querySelectorAll(".input-notes")[index].removeAttribute("readonly")
+document.querySelectorAll(".input-notes")[index].removeAttribute("disabled")
+
+document.querySelectorAll(".input-date")[index].removeAttribute("readonly") 
+document.querySelectorAll(".input-date")[index].removeAttribute("disabled")
+}
+/* ------------------------------- saveList() ------------------------------- */
+function saveList(index)
+{
+document.getElementById("edit").innerHTML = "Edit"
+document.querySelectorAll(".edit")[index].classList.replace("fa-floppy-disk" ,"fa-pen")
+
+
+document.querySelectorAll(".input-title")[index].classList.remove("editing-list-box"); 
+document.querySelectorAll(".input-notes")[index].classList.remove("editing-list-box"); 
+document.querySelectorAll(".input-date")[index].classList.remove("editing-list-box"); 
+
+document.querySelectorAll(".input-title")[index].setAttribute("readonly" ,"true")
+document.querySelectorAll(".input-title")[index].setAttribute("disabled" ,"true")
+
+document.querySelectorAll(".input-notes")[index].setAttribute("readonly","true")
+document.querySelectorAll(".input-notes")[index].setAttribute("disabled","true")
+
+document.querySelectorAll(".input-date")[index].setAttribute("readonly","true") 
+document.querySelectorAll(".input-date")[index].setAttribute("disabled","true")
+}
+/* ------------------------------- handleCheck() ------------------------------- */
+// var checkedCouner = 0
+function handleCheck(index){
+    if(document.querySelectorAll(".chk")[index].checked  == true)
+    {
+
+        ok.push(index);
+        console.log(ok+"  >>>>>>>>>>>>>>>>>>>>>");
+        localStorage.setItem("oklist" , JSON.stringify(ok))
+
+        document.querySelectorAll(".input-title")[index].classList.add("add-list-done");   
+        document.querySelectorAll(".input-notes")[index].classList.add("add-list-done");  
+        document.querySelectorAll(".input-date")[index].classList.add("add-list-done");  
+        // document.querySelectorAll(".done")[index].style.color="green"; 
+        ++checkedCouner;
+        // localStorage.setItem("myDone",JSON.stringify(checkedCouner))
+        // document.getElementById("done-word").title = `+${checkedCouner}`; 
+        
+        // localStorage.setItem("allList" , JSON.stringify(allList))
+        // console.log(x0.target);
+        
+    }
+    else{
+
+        ok.splice(index,1)
+        console.log(ok+"  <<<<<<<<<<<<<<");
+        localStorage.setItem("oklist" , JSON.stringify(ok))
+        // document.querySelectorAll(".input-title")[index].classList.remove("add-list-done"); 
+        // document.querySelectorAll(".input-notes")[index].classList.remove("add-list-done"); 
+        // document.querySelectorAll(".input-date")[index].classList.remove("add-list-done"); 
+        document.querySelectorAll(".done")[index].style.color="";
+        --checkedCouner
+        // localStorage.setItem("myDone",JSON.stringify(checkedCouner))
+        // document.getElementById("done-word").title = `+${checkedCouner}`; 
+
+        // localStorage.setItem("allList" , JSON.stringify(allList))
+    }
+    localStorage.setItem("myDone",JSON.stringify(checkedCouner))
+    document.getElementById("done-word").title = `+${checkedCouner}`; 
+
+}
+/* ------------------------------ deleteList() ------------------------------ */
+function deleteList(index){
+    allList.splice(index,1)
+    displayList()
+    localStorage.setItem("allList" , JSON.stringify(allList))
+    --checkedCouner/* //////////////////////////////////////////////// */
+    document.getElementById("done-word").title = `+${checkedCouner}`; /* /////////////////////////// */
+}
+/* --------------------------------- reset() -------------------------------- */
+function reset()
+{
+    allList =[]
+    localStorage.removeItem("allList")
+    localStorage.removeItem("myDone")
+
+    checkedCouner =0 /* //////////////////////////////////////////////// */
+    document.getElementById("done-word").title = `+${checkedCouner}`; /* /////////////////////////// */
+    // localStorage.setItem("allList" , allList)
+displayList()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
